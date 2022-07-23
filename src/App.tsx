@@ -19,10 +19,11 @@ function App() {
     console.log(textPhraseWords)
   }
   // TODO
-  // * filter words for matches w/ emoji names. 
-  // * if true, return the unicode codepoint of that emoji. 
+  // * create mapping: word -> emoji name -> utf codepoint
+  // * filter words for matches w/ emoji names
+  // * if true, return the unicode codepoint of that emoji
   // * then convert it from the unicode to the emoji 
-  // * and return the array of both words and emojis.
+  // * and return the array of both words and emojis
 
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleTextInput(e)
