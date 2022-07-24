@@ -55,3 +55,8 @@ const convertTextToUnicode = () => {
   }
 
   ``
+
+  // stroing the mapping. 
+  - yaml?
+  - json?
+  - js object?

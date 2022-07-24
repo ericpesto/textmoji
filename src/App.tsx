@@ -19,6 +19,7 @@ function App() {
     console.log(textPhraseWords)
   }
   // TODO
+  // * use pupeteer to scrape a site that has emoji, emoji name and unicode in a table. 
   // * create mapping: word -> emoji name -> utf codepoint
   // * filter words for matches w/ emoji names
   // * if true, return the unicode codepoint of that emoji
