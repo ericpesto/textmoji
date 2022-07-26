@@ -39,19 +39,18 @@ function Header() {
   console.log('emojiPhraseWords ->', emojiPhraseWords)
   console.log('emojiPhrase ->', emojiPhrase)
 
+
   return (
     <header className="App-header">
-    <p>
-      Translate text to 🙂
-    </p>
-    <input type="text" value={textPhrase} onChange={handleUserInput}></input>
-    <p>Text: {textPhrase}</p>
-    {/* <p>Output: {emojiPhrase}</p> */}
-    {/* <p>Words:</p>
-    {textPhraseWords.map((word, index) => {
-      return <li key={index}>{word}</li>
-    })} */}
-  </header>
+      <p>Translate text to 🙂</p>
+      <input type="text" value={textPhrase} onChange={handleUserInput}></input>
+      <p>Text: {textPhrase}</p>
+      {/* <p>Output: {emojiPhrase}</p> */}
+      {/* <p>Words:</p>
+      {textPhraseWords.map((word, index) => {
+        return <li key={index}>{word}</li>
+      })} */}
+    </header>
   )
 }
 
