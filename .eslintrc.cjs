@@ -15,5 +15,6 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'max-len': ['error', { code: 180 }],
+    'react/jsx-filename-extension': 'off',
   },
 };

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import UserInput from './UserInput';
 import '../App.css';
+import emojiDictionary from '../utils/emoji-mappings/emoji-name-table';
 
 function Main() {
   const [textPhrase, setTextPhrase] = useState<string>('');
@@ -35,10 +36,12 @@ function Main() {
   };
 
   // import emoji dict
+  // loop through phrases
   // loop through dict
   // if emoji name matchs word, return the code point, then convert to emoji
   // if not emoji name return word
   // join the array of words and emojis
+  console.log('emojiDictionary->', emojiDictionary);
 
   console.log('textPhrase ->', textPhrase);
   console.log('textPhraseWords ->', textPhraseWords);
