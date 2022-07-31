@@ -3,7 +3,7 @@ interface EmojiDictionary {
   codePoint: string;
 }
 
-const emojiDictionary: EmojiDictionary = [
+const emojiDictionary: EmojiDictionary[] = [
   {
     name: 'Grinning Face',
     codePoint: 'U+1F600',
