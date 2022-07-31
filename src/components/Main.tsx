@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserInput from './UserInput';
 import '../App.css';
+import * as JSONEmojiMap from '../utils/emoji-mappings/key-value-codepoint-mapping.json';
 
-function Header() {
+function Main() {
   const [textPhrase, setTextPhrase] = useState<string>('');
   const [textPhraseWords, setTextPhraseWords] = useState<string[]>([]);
   // const [unicodePhraseWords, setUnicodePhraseWords] =  useState<string[]>([])
@@ -21,7 +22,9 @@ function Header() {
   };
 
   // TODO
-  // * create mapping: word -> emoji name -> utf codepoint
+  // ! DATA NEEDS TO BE AN ARRAY OF OBJECTS, {name: smile, codePoint= U+76234}
+  // or... easy mode, use plugins
+  // * create mapping: word -> emoji name -> utf codepoint 
   // * filter words for matches w/ emoji names
   // * if true, return the unicode codepoint of that emoji
   // * then convert it from the unicode to the emoji
@@ -31,6 +34,11 @@ function Header() {
     handleTextInput(e);
     splitTextPhraseIntoWords();
   };
+
+  // import lib
+  // loop through map
+  // if emoji name matchs word, return the emoji
+  // join the array of words and emojis
 
   console.log('textPhrase ->', textPhrase);
   console.log('textPhraseWords ->', textPhraseWords);
@@ -51,4 +59,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Main;

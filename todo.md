@@ -65,6 +65,7 @@ const convertTextToUnicode = () => {
   - js object?
 
 
+how to make emji co**** mponent
   https://medium.com/@seanmcp/%EF%B8%8F-how-to-use-emojis-in-react-d23bbf608bf7
 
 
