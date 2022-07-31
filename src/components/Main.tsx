@@ -21,9 +21,9 @@ function Main() {
   };
 
   // TODO
-  // ! DATA NEEDS TO BE AN ARRAY OF OBJECTS, {name: smile, codePoint= U+76234}
+  // ! DATA NEEDS TO BE AN ARRAY OF OBJECTS, {name: smile, codePoint= U+76234} ✅
   // or... easy mode, use plugins
-  // * create mapping: word -> emoji name -> utf codepoint
+  // * create mapping: word -> emoji name -> utf codepoint ✅
   // * filter words for matches w/ emoji names
   // * if true, return the unicode codepoint of that emoji
   // * then convert it from the unicode to the emoji
@@ -34,11 +34,11 @@ function Main() {
     splitTextPhraseIntoWords();
   };
 
-  // import lib
-  // loop through map
-  // if emoji name matchs word, return the emoji
+  // import emoji dict
+  // loop through dict
+  // if emoji name matchs word, return the code point, then convert to emoji
+  // if not emoji name return word
   // join the array of words and emojis
-
 
   console.log('textPhrase ->', textPhrase);
   console.log('textPhraseWords ->', textPhraseWords);
