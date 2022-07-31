@@ -5,6 +5,9 @@
 // * then convert it from the unicode to the emoji 
 // * and return the array of both words and emojis
 
+// v1 convert english to emoji
+// v2, convert emji to english
+
 
 EXTRA INFO: 
 * Converting unicode to text/emoji:
@@ -60,3 +63,18 @@ const convertTextToUnicode = () => {
   - yaml?
   - json?
   - js object?
+
+
+  https://medium.com/@seanmcp/%EF%B8%8F-how-to-use-emojis-in-react-d23bbf608bf7
+
+
+
+  **** easy mode: https://github.com/IonicaBizau/emoji-unicode#readme
+
+var emojiUnicode = require("emoji-unicode")
+
+var toEmoji = require("emoji-name-map")
+
+const emojiName = 'poop'
+const codePoint = emojiUnicode(toEmoji.get(emojiName))
+console.log(String.fromCodePoint(parseInt(codePoint, 16)))
