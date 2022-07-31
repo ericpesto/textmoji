@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserInput from './UserInput';
 import '../App.css';
 import emojiDictionary from '../utils/emoji-mappings/emoji-name-table';
@@ -18,8 +18,22 @@ function Main() {
   const splitTextPhraseIntoWords = () => {
     const phraseToWords = textPhrase.split(' ');
     setTextPhraseWords(phraseToWords);
-    console.log(textPhraseWords);
   };
+
+  const convertedText = () => {
+    const converted = textPhraseWords.map((word: string) => {
+      console.log('word', word);
+      emojiDictionary.map((emoji) => {
+        if (emoji.name.toLowerCase() === word.toLowerCase()) {
+          console.log('emoji', emoji);
+          return emoji.codePoint;
+        }
+        return word;
+      });
+    })
+    setEmojiPhraseWords(converted)
+  }
+
 
   // TODO
   // ! DATA NEEDS TO BE AN ARRAY OF OBJECTS, {name: smile, codePoint= U+76234} ✅
@@ -33,6 +47,7 @@ function Main() {
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleTextInput(e);
     splitTextPhraseIntoWords();
+    convertedText();
   };
 
   // import emoji dict
@@ -41,7 +56,7 @@ function Main() {
   // if emoji name matchs word, return the code point, then convert to emoji
   // if not emoji name return word
   // join the array of words and emojis
-  console.log('emojiDictionary->', emojiDictionary);
+  // console.log('emojiDictionary ->', emojiDictionary);
 
   console.log('textPhrase ->', textPhrase);
   console.log('textPhraseWords ->', textPhraseWords);
