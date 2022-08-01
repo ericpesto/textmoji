@@ -6,61 +6,75 @@ import emojiDictionary from '../utils/emoji-mappings/emoji-name-table';
 function Main() {
   const [textPhrase, setTextPhrase] = useState<string>('');
   const [textPhraseWords, setTextPhraseWords] = useState<string[]>([]);
-  // const [unicodePhraseWords, setUnicodePhraseWords] =  useState<string[]>([])
   const [emojiPhraseWords, setEmojiPhraseWords] = useState<string[]>([]);
   const [emojiPhrase, setEmojiPhrase] = useState<string>('');
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // bug/ account for extra spaces? atm they are counted as words
     setTextPhrase(e.target.value);
   };
 
-  const splitTextPhraseIntoWords = () => {
+  const splitPhraseIntoWords = () => {
     const phraseToWords = textPhrase.split(' ');
     setTextPhraseWords(phraseToWords);
   };
 
-  const convertedText = () => {
-    const converted = textPhraseWords.map((word: string) => {
-      console.log('word', word);
-      emojiDictionary.map((emoji) => {
-        if (emoji.name.toLowerCase() === word.toLowerCase()) {
-          console.log('emoji', emoji);
-          return emoji.codePoint;
-        }
-        return word;
-      });
-    })
-    setEmojiPhraseWords(converted)
-  }
+  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleTextInput(e);
+  };
 
+  useEffect(() => {
+    splitPhraseIntoWords();
+  }, [textPhrase]);
 
   // TODO
-  // ! DATA NEEDS TO BE AN ARRAY OF OBJECTS, {name: smile, codePoint= U+76234} ✅
   // or... easy mode, use plugins
-  // * create mapping: word -> emoji name -> utf codepoint ✅
+
   // * filter words for matches w/ emoji names
   // * if true, return the unicode codepoint of that emoji
   // * then convert it from the unicode to the emoji
+  // * else return word
   // * and return the array of both words and emojis
 
-  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleTextInput(e);
-    splitTextPhraseIntoWords();
-    convertedText();
-  };
+  // ? try w/ use effect and a array method, find?
 
-  // import emoji dict
-  // loop through phrases
-  // loop through dict
-  // if emoji name matchs word, return the code point, then convert to emoji
-  // if not emoji name return word
-  // join the array of words and emojis
-  // console.log('emojiDictionary ->', emojiDictionary);
+  // const convertText = () => {
+  //   const array: string[] = [];
+  //   textPhraseWords.map((word: string) => {
+  //     emojiDictionary.map((emoji) => {
+  //       if (emoji.name.toLowerCase() === word.toLowerCase()) {
+  //         console.log('emoji', emoji);
+  //         return array.push(emoji.codePoint);
+  //       }
+
+  //       if (emoji.name.toLowerCase() !== word.toLowerCase()) {
+  //         console.log('word', word);
+  //         return array.push(word);
+  //       }
+  //     });
+  //   });
+  //   setEmojiPhraseWords(array);
+  // };
+
+  // const convertText = () => {
+  //   const array: string[] = [];
+  //   for (let i: number; i < emojiDictionary.length; i++) {
+  //     for (let n: number; n < textPhraseWords.length; i++) {
+  //       if (emojiDictionary[i].name.toLowerCase() === textPhraseWords[n].toLowerCase()) {
+  //         console.log(emojiDictionary[i].name);
+  //         console.log(emojiDictionary[i].codePoint);
+  //         console.log(textPhraseWords[n]);
+  //       }
+  //     }
+  //   }
+  //   setEmojiPhraseWords(array);
+  // };
+
+  useEffect(() => {
+    // convertText();
+  }, [textPhraseWords]);
 
   console.log('textPhrase ->', textPhrase);
   console.log('textPhraseWords ->', textPhraseWords);
-  // console.log('unicodePhraseWords ->', unicodePhraseWords)
   console.log('emojiPhraseWords ->', emojiPhraseWords);
   console.log('emojiPhrase ->', emojiPhrase);
 
