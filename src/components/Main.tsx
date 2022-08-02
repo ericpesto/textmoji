@@ -42,7 +42,6 @@ function Main() {
     const emojiMatches: object[] = [];
     textPhraseWords.map((word: string, wordIndex: number) => {
       emojiDictionary.map((emoji, emojiIndex) => {
-        // if (emoji.name.toLowerCase() === word.toLowerCase()) {
         if (emoji.name.toLowerCase() === word.toLowerCase()) {
           return emojiMatches.push({
             word,
