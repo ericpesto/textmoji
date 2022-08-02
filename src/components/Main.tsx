@@ -57,24 +57,24 @@ function Main() {
     setEmojiPhraseWords(emojiMatches);
   };
 
-  const findLooseEmojiMatches = () => {
-    const emojiMatches: object[] = [];
-    textPhraseWords.map((word: string, wordIndex: number) => {
-      emojiDictionary.find((emoji, emojiIndex) => {
-        // if (emoji.name.toLowerCase() === word.toLowerCase()) {
-        if (emoji.name.toLowerCase().includes(word.toLowerCase())) {
-          return emojiMatches.push({
-            word,
-            wordIndex,
-            emojiCodePoint: emoji.codePoint,
-            emojiName: emoji.name,
-            emojiIndex,
-          });
-        }
-      });
-    });
-    setEmojiPhraseWords(emojiMatches);
-  };
+  // const findLooseEmojiMatches = () => {
+  //   const emojiMatches: object[] = [];
+  //   textPhraseWords.map((word: string, wordIndex: number) => {
+  //     emojiDictionary.find((emoji, emojiIndex) => {
+  //       // if (emoji.name.toLowerCase() === word.toLowerCase()) {
+  //       if (emoji.name.toLowerCase().includes(word.toLowerCase())) {
+  //         return emojiMatches.push({
+  //           word,
+  //           wordIndex,
+  //           emojiCodePoint: emoji.codePoint,
+  //           emojiName: emoji.name,
+  //           emojiIndex,
+  //         });
+  //       }
+  //     });
+  //   });
+  //   setEmojiPhraseWords(emojiMatches);
+  // };
 
   useEffect(() => {
     findStrictEmojiMatches();
