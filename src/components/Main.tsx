@@ -38,10 +38,11 @@ function Main() {
   // ? search for matches, if match, return index of emoji and index of word.
   // ? then in array of ords, replace the indexes w/ their emoji value
 
-  const findEmojiMatches = () => {
+  const findStrictEmojiMatches = () => {
     const emojiMatches: object[] = [];
     textPhraseWords.map((word: string, wordIndex: number) => {
       emojiDictionary.map((emoji, emojiIndex) => {
+        // if (emoji.name.toLowerCase() === word.toLowerCase()) {
         if (emoji.name.toLowerCase() === word.toLowerCase()) {
           return emojiMatches.push({
             word,
@@ -56,22 +57,27 @@ function Main() {
     setEmojiPhraseWords(emojiMatches);
   };
 
-  // const convertText = () => {
-  //   const array: string[] = [];
-  //   for (let i: number; i < emojiDictionary.length; i++) {
-  //     for (let n: number; n < textPhraseWords.length; i++) {
-  //       if (emojiDictionary[i].name.toLowerCase() === textPhraseWords[n].toLowerCase()) {
-  //         console.log(emojiDictionary[i].name);
-  //         console.log(emojiDictionary[i].codePoint);
-  //         console.log(textPhraseWords[n]);
-  //       }
-  //     }
-  //   }
-  //   setEmojiPhraseWords(array);
-  // };
+  const findLooseEmojiMatches = () => {
+    const emojiMatches: object[] = [];
+    textPhraseWords.map((word: string, wordIndex: number) => {
+      emojiDictionary.find((emoji, emojiIndex) => {
+        // if (emoji.name.toLowerCase() === word.toLowerCase()) {
+        if (emoji.name.toLowerCase().includes(word.toLowerCase())) {
+          return emojiMatches.push({
+            word,
+            wordIndex,
+            emojiCodePoint: emoji.codePoint,
+            emojiName: emoji.name,
+            emojiIndex,
+          });
+        }
+      });
+    });
+    setEmojiPhraseWords(emojiMatches);
+  };
 
   useEffect(() => {
-    findEmojiMatches();
+    findStrictEmojiMatches();
   }, [textPhraseWords]);
 
   console.log('textPhrase ->', textPhrase);
