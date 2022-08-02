@@ -35,14 +35,6 @@ function Main() {
   // ...to get the index of the first match, you can use findIndex()
 
   // * NEW APPROACH?
-  // ? store textPhraseWords as array of objects, each object:
-  // ? [{word: blah, index: 0}, {word: blob, index: 1}], index so you know and can preserve order
-  // ? look for matches, modify exisiting array
-  // ? remove them from textPhraseWords array
-  // ? add them to new array w/ index (relative to textPhraseWords array)
-  // ? this way you can preserve order of words?
-
-  // * NEW APPROACH?
   // ? search for matches, if match, return index of emoji and index of word.
   // ? then in array of ords, replace the indexes w/ their emoji value
 
