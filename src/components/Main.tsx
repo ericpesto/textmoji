@@ -6,7 +6,7 @@ import emojiDictionary from '../utils/emoji-mappings/emoji-name-table';
 function Main() {
   const [textPhrase, setTextPhrase] = useState<string>('');
   const [textPhraseWords, setTextPhraseWords] = useState<string[]>([]);
-  const [emojiPhraseWords, setEmojiPhraseWords] = useState<string[]>([]);
+  const [emojiPhraseWords, setEmojiPhraseWords] = useState<object[]>([]);
   const [emojiPhrase, setEmojiPhrase] = useState<string>('');
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,33 +27,42 @@ function Main() {
   }, [textPhrase]);
 
   // TODO
-  // or... easy mode, use plugins
+  // * or... easy mode, use plugins
+  // * or regex to find macthes in string, could work for emojis with names that have to or more words
 
-  // * filter words for matches w/ emoji names
-  // * if true, return the unicode codepoint of that emoji
-  // * then convert it from the unicode to the emoji
-  // * else return word
-  // * and return the array of both words and emojis
+  // ...to get the value of the first match only, you can use find()
+  // ...to get an array of all match results, you can use filter()
+  // ...to get the index of the first match, you can use findIndex()
 
-  // ? try w/ use effect and a array method, find?
+  // * NEW APPROACH?
+  // ? store textPhraseWords as array of objects, each object:
+  // ? [{word: blah, index: 0}, {word: blob, index: 1}], index so you know and can preserve order
+  // ? look for matches, modify exisiting array
+  // ? remove them from textPhraseWords array
+  // ? add them to new array w/ index (relative to textPhraseWords array)
+  // ? this way you can preserve order of words?
 
-  // const convertText = () => {
-  //   const array: string[] = [];
-  //   textPhraseWords.map((word: string) => {
-  //     emojiDictionary.map((emoji) => {
-  //       if (emoji.name.toLowerCase() === word.toLowerCase()) {
-  //         console.log('emoji', emoji);
-  //         return array.push(emoji.codePoint);
-  //       }
+  // * NEW APPROACH?
+  // ? search for matches, if match, return index of emoji and index of word.
+  // ? then in array of ords, replace the indexes w/ their emoji value
 
-  //       if (emoji.name.toLowerCase() !== word.toLowerCase()) {
-  //         console.log('word', word);
-  //         return array.push(word);
-  //       }
-  //     });
-  //   });
-  //   setEmojiPhraseWords(array);
-  // };
+  const findEmojiMatches = () => {
+    const emojiMatches: object[] = [];
+    textPhraseWords.map((word: string, wordIndex: number) => {
+      emojiDictionary.map((emoji, emojiIndex) => {
+        if (emoji.name.toLowerCase() === word.toLowerCase()) {
+          return emojiMatches.push({
+            word,
+            wordIndex,
+            emojiCodePoint: emoji.codePoint,
+            emojiName: emoji.name,
+            emojiIndex,
+          });
+        }
+      });
+    });
+    setEmojiPhraseWords(emojiMatches);
+  };
 
   // const convertText = () => {
   //   const array: string[] = [];
@@ -70,7 +79,7 @@ function Main() {
   // };
 
   useEffect(() => {
-    // convertText();
+    findEmojiMatches();
   }, [textPhraseWords]);
 
   console.log('textPhrase ->', textPhrase);
