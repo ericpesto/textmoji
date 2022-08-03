@@ -6,7 +6,7 @@
 // * and return the array of both words and emojis
 
 // v1 convert english to emoji
-// v2, convert emji to english
+// v2, convert emjoi to english, this would actually be easier
 
 
 EXTRA INFO: 

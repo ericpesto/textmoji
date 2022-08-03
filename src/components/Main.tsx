@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserInput from './UserInput';
 import '../App.css';
-import emojiDictionary from '../utils/emoji-mappings/emoji-name-table';
+import emojiDictionary, { EmojiDictionary } from '../utils/emoji-mappings/emoji-name-table';
 
 function Main() {
   const [textPhrase, setTextPhrase] = useState<string>('');
@@ -38,10 +38,12 @@ function Main() {
   // ? search for matches, if match, return index of emoji and index of word.
   // ? then in array of ords, replace the indexes w/ their emoji value
 
-  const findStrictEmojiMatches = () => {
+  // think i need to sanitise my ditionary into a more usable format, one code point and one word names
+
+  const findStrictEmojiMatches = (textInput: string[], emojis: EmojiDictionary[]) => {
     const emojiMatches: object[] = [];
-    textPhraseWords.map((word: string, wordIndex: number) => {
-      emojiDictionary.map((emoji, emojiIndex) => {
+    textInput.map((word: string, wordIndex: number) => {
+      emojis.map((emoji, emojiIndex) => {
         if (emoji.name.toLowerCase() === word.toLowerCase()) {
           return emojiMatches.push({
             word,
@@ -55,6 +57,10 @@ function Main() {
     });
     setEmojiPhraseWords(emojiMatches);
   };
+
+  // const insertCodePoints = () => {
+
+  // }
 
   // const findLooseEmojiMatches = () => {
   //   const emojiMatches: object[] = [];
@@ -76,7 +82,7 @@ function Main() {
   // };
 
   useEffect(() => {
-    findStrictEmojiMatches();
+    findStrictEmojiMatches(textPhraseWords, emojiDictionary);
   }, [textPhraseWords]);
 
   console.log('textPhrase ->', textPhrase);

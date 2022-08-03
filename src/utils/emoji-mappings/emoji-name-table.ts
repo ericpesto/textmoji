@@ -1,4 +1,4 @@
-interface EmojiDictionary {
+export interface EmojiDictionary {
   name: string;
   codePoint: string;
 }
