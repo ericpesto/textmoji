@@ -1,20 +1,19 @@
 import React from 'react';
 
-interface userInput { 
+interface UserInput {
   handleUserInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  textPhrase: string;
+  userInput: string;
 }
-
-function UserInput({ handleUserInput, textPhrase }: userInput) {
+function CaptureUserInput({ handleUserInput, userInput }: UserInput) {
   return (
     <>
-      <input type="text" value={textPhrase} onChange={handleUserInput} />
+      <input type="text" value={userInput} onChange={handleUserInput} />
       <p>
         English:
-        {textPhrase}
+        {userInput}
       </p>
     </>
   );
 }
 
-export default UserInput;
+export default CaptureUserInput;

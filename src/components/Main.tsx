@@ -4,18 +4,18 @@ import '../App.css';
 import emojiDictionary, { EmojiDictionary } from '../utils/emoji-mappings/emoji-name-table';
 
 function Main() {
-  const [textPhrase, setTextPhrase] = useState<string>('');
-  const [textPhraseWords, setTextPhraseWords] = useState<string[]>([]);
-  const [emojiPhraseWords, setEmojiPhraseWords] = useState<object[]>([]);
-  const [emojiPhrase, setEmojiPhrase] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>('');
+  const [words, setWords] = useState<string[]>([]);
+  const [emojis, setEmojis] = useState<object[]>([]);
+  const [output, setOutput] = useState<string>('');
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTextPhrase(e.target.value);
+    setUserInput(e.target.value);
   };
 
   const splitPhraseIntoWords = () => {
-    const phraseToWords = textPhrase.split(' ');
-    setTextPhraseWords(phraseToWords);
+    const phraseToWords = userInput.split(' ');
+    setWords(phraseToWords);
   };
 
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,7 @@ function Main() {
 
   useEffect(() => {
     splitPhraseIntoWords();
-  }, [textPhrase]);
+  }, [userInput]);
 
   // TODO
   // * or... easy mode, use plugins
@@ -40,10 +40,10 @@ function Main() {
 
   // think i need to sanitise my ditionary into a more usable format, one code point and one word names
 
-  const findStrictEmojiMatches = (textInput: string[], emojis: EmojiDictionary[]) => {
+  const findStrictEmojiMatches = (textInput: string[], emojiDict: EmojiDictionary[]) => {
     const emojiMatches: object[] = [];
     textInput.map((word: string, wordIndex: number) => {
-      emojis.map((emoji, emojiIndex) => {
+      emojiDict.map((emoji, emojiIndex) => {
         if (emoji.name.toLowerCase() === word.toLowerCase()) {
           return emojiMatches.push({
             word,
@@ -55,50 +55,48 @@ function Main() {
         }
       });
     });
-    setEmojiPhraseWords(emojiMatches);
+    setEmojis(emojiMatches);
   };
 
-  // const insertCodePoints = () => {
-
-  // }
-
-  // const findLooseEmojiMatches = () => {
-  //   const emojiMatches: object[] = [];
-  //   textPhraseWords.map((word: string, wordIndex: number) => {
-  //     emojiDictionary.find((emoji, emojiIndex) => {
-  //       // if (emoji.name.toLowerCase() === word.toLowerCase()) {
-  //       if (emoji.name.toLowerCase().includes(word.toLowerCase())) {
-  //         return emojiMatches.push({
-  //           word,
-  //           wordIndex,
-  //           emojiCodePoint: emoji.codePoint,
-  //           emojiName: emoji.name,
-  //           emojiIndex,
-  //         });
-  //       }
-  //     });
-  //   });
-  //   setEmojiPhraseWords(emojiMatches);
+  // const swapMatchesWithEmojis = (words:) => {
+  //   // map through words
+  //   // if word matches emojis,
+  //   // remove item/rewrite item as codepoint
+  //   // convert codepoint to emoji
+    
   // };
 
-  useEffect(() => {
-    findStrictEmojiMatches(textPhraseWords, emojiDictionary);
-  }, [textPhraseWords]);
+  const findLooseEmojiMatches = (textInput: string[], emojiDict: EmojiDictionary[]) => {
+    const emojiMatches: object[] = [];
+    textInput.map((word: string, wordIndex: number) => {
+      emojiDict.map((emoji, emojiIndex) => {
+        if (emoji.name.toLowerCase().includes(word.toLowerCase())) {
+          return emojiMatches.push({
+            word,
+            wordIndex,
+            emojiCodePoint: emoji.codePoint,
+            emojiName: emoji.name,
+            emojiIndex,
+          });
+        }
+      });
+    });
+    setEmojis(emojiMatches);
+  };
 
-  console.log('textPhrase ->', textPhrase);
-  console.log('textPhraseWords ->', textPhraseWords);
-  console.log('emojiPhraseWords ->', emojiPhraseWords);
-  console.log('emojiPhrase ->', emojiPhrase);
+  useEffect(() => {
+    findStrictEmojiMatches(words, emojiDictionary);
+  }, [words]);
+
+  console.log('userInput ->', userInput);
+  console.log('words ->', words);
+  console.log('emojis ->', emojis);
+  console.log('output ->', output);
 
   return (
     <header className="App-header">
       <p>Translate text to 🙂</p>
-      <UserInput handleUserInput={handleUserInput} textPhrase={textPhrase} />
-      {/* <p>Output: {emojiPhrase}</p> */}
-      {/* <p>Words:</p>
-      {textPhraseWords.map((word, index) => {
-        return <li key={index}>{word}</li>
-      })} */}
+      <UserInput handleUserInput={handleUserInput} userInput={userInput} />
     </header>
   );
 }
