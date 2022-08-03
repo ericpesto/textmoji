@@ -10,7 +10,7 @@ function Main() {
   const [emojis, setEmojis] = useState<object[]>([]);
   const [output, setOutput] = useState<string>('');
 
-  const matchType: string = 'loose';
+  const matchType: string = 'strict';
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
@@ -100,17 +100,15 @@ function Main() {
       matchedEmojis.map((emoji: EmojiMatch) => {
         if (emoji.wordIndex === wordIndex) {
           const { codePoint } = emoji;
-          let codePoints: string[] = [];
           let santiziedCodePoint: string = '';
-          if (codePoint.includes(',')) {
-            codePoints = codePoint.split(',');
-            santiziedCodePoint = codePoints[0].slice(2);
-          }
           if (!codePoint.includes(',')) {
             santiziedCodePoint = codePoint.slice(2);
           }
+          if (codePoint.includes(',')) {
+            const codePoints: string[] = codePoint.split(',');
+            santiziedCodePoint = codePoints[0].slice(2);
+          }
           const emojiIcon = String.fromCodePoint(parseInt(santiziedCodePoint, 16));
-
           return combined.push(emojiIcon);
         }
         return combined.push(word);

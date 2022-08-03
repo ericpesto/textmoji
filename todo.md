@@ -8,6 +8,8 @@
 // v1 convert english to emoji
 // v2, convert emjoi to english, this would actually be easier
 
+// https://www.bennadel.com/blog/3804-printing-emoji-characters-from-unicode-codepoints-in-lucee-cfml-5-3-5-92.htm
+// https://stackoverflow.com/questions/63456170/how-to-render-multi-code-point-emojis-with-javascript
 
 EXTRA INFO: 
 * Converting unicode to text/emoji:
