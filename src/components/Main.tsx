@@ -32,11 +32,6 @@ function Main() {
   // TODO
   // * or... easy mode, use plugins
   // * or regex to find macthes in string, could work for emojis with names that have to or more words
-
-  // * NEW APPROACH?
-  // ? search for matches, if match, return index of emoji and index of word.
-  // ? then in array of ords, replace the indexes w/ their emoji value
-
   // think i need to sanitise my ditionary into a more usable format, one code point and one word names
 
   // * Strict Emoji Matches
@@ -100,10 +95,6 @@ function Main() {
   }
 
   const swapMatchesWithEmojis = (inputWords: string[], matchedEmojis: object[]) => {
-    // map through words
-    // if word matches emojis,
-    // remove item/rewrite item as codepoint
-    // convert codepoint to emoji
     const combined: string[] = [];
     inputWords.map((word, wordIndex) => {
       matchedEmojis.map((emoji: EmojiMatch) => {
