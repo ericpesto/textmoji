@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import UserInput from './UserInput';
 import '../App.css';
+import DisplayOutput from './DisplayOutput';
+import UserInput from './UserInput';
 import emojiDictionary, { EmojiDictionary } from '../utils/emoji-mappings/emoji-name-table';
 
 function Main() {
@@ -32,7 +33,6 @@ function Main() {
   // * or... easy mode, use plugins
   // * or regex to find macthes in string, could work for emojis with names that have to or more words
 
-
   // * NEW APPROACH?
   // ? search for matches, if match, return index of emoji and index of word.
   // ? then in array of ords, replace the indexes w/ their emoji value
@@ -42,15 +42,15 @@ function Main() {
   // * Strict Emoji Matches
   const findStrictEmojiMatches = (textInput: string[], emojiDict: EmojiDictionary[]) => {
     const emojiMatches: object[] = [];
-    textInput.map((word: string, wordIndex: number) => {
+    textInput.map((word, wordIndex) => {
       emojiDict.map((emoji, emojiIndex) => {
         if (emoji.name.toLowerCase() === word.toLowerCase()) {
           return emojiMatches.push({
             word,
             wordIndex,
-            emojiCodePoint: emoji.codePoint,
+            codePoint: emoji.codePoint,
             emojiName: emoji.name,
-            emojiIndex,
+            emojiLibIndex: emojiIndex,
           });
         }
       });
@@ -65,15 +65,15 @@ function Main() {
   // * Loose Emoji Matches
   const findLooseEmojiMatches = (textInput: string[], emojiDict: EmojiDictionary[]) => {
     const emojiMatches: object[] = [];
-    textInput.map((word: string, wordIndex: number) => {
+    textInput.map((word, wordIndex) => {
       emojiDict.map((emoji, emojiIndex) => {
         if (emoji.name.toLowerCase().includes(word.toLowerCase())) {
           return emojiMatches.push({
             word,
             wordIndex,
-            emojiCodePoint: emoji.codePoint,
+            codePoint: emoji.codePoint,
             emojiName: emoji.name,
-            emojiIndex,
+            emojiLibIndex: emojiIndex,
           });
         }
       });
@@ -89,16 +89,36 @@ function Main() {
     if (matchType === 'loose') {
       findLooseEmojiMatches(words, emojiDictionary);
     }
-  }, [words]);
+  }, [words, matchType]);
 
-  const swapMatchesWithEmojis = (words: string[], emojis: object[]) => {
+  interface EmojiMatch {
+    word: string;
+    wordIndex: number;
+    codePoint: string;
+    emojiName: string;
+    emojiLibIndex: number;
+  }
+
+  const swapMatchesWithEmojis = (inputWords: string[], matchedEmojis: object[]) => {
     // map through words
     // if word matches emojis,
     // remove item/rewrite item as codepoint
     // convert codepoint to emoji
-    
+    const combined: string[] = [];
+    inputWords.map((word, wordIndex) => {
+      matchedEmojis.map((emoji: EmojiMatch) => {
+        if (emoji.wordIndex === wordIndex) {
+          return combined.push(emoji.codePoint);
+        }
+        return combined.push(word);
+      });
+    });
+    setOutput(combined.join(' '));
   };
-  // use
+
+  useEffect(() => {
+    swapMatchesWithEmojis(words, emojis);
+  }, [words, emojis]);
 
   console.log('userInput ->', userInput);
   console.log('words ->', words);
@@ -109,6 +129,7 @@ function Main() {
     <header className="App-header">
       <p>Translate text to 🙂</p>
       <UserInput handleUserInput={handleUserInput} userInput={userInput} matchType={matchType} />
+      <DisplayOutput output={output} />
     </header>
   );
 }
