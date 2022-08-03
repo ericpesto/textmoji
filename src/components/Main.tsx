@@ -9,6 +9,8 @@ function Main() {
   const [emojis, setEmojis] = useState<object[]>([]);
   const [output, setOutput] = useState<string>('');
 
+  const matchType: string = 'strict';
+
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
   };
@@ -30,9 +32,6 @@ function Main() {
   // * or... easy mode, use plugins
   // * or regex to find macthes in string, could work for emojis with names that have to or more words
 
-  // ...to get the value of the first match only, you can use find()
-  // ...to get an array of all match results, you can use filter()
-  // ...to get the index of the first match, you can use findIndex()
 
   // * NEW APPROACH?
   // ? search for matches, if match, return index of emoji and index of word.
@@ -40,6 +39,7 @@ function Main() {
 
   // think i need to sanitise my ditionary into a more usable format, one code point and one word names
 
+  // * Strict Emoji Matches
   const findStrictEmojiMatches = (textInput: string[], emojiDict: EmojiDictionary[]) => {
     const emojiMatches: object[] = [];
     textInput.map((word: string, wordIndex: number) => {
@@ -58,14 +58,11 @@ function Main() {
     setEmojis(emojiMatches);
   };
 
-  // const swapMatchesWithEmojis = (words:) => {
-  //   // map through words
-  //   // if word matches emojis,
-  //   // remove item/rewrite item as codepoint
-  //   // convert codepoint to emoji
-    
-  // };
+  // ...to get the value of the first match only, you can use find()
+  // ...to get an array of all match results, you can use filter()
+  // ...to get the index of the first match, you can use findIndex()
 
+  // * Loose Emoji Matches
   const findLooseEmojiMatches = (textInput: string[], emojiDict: EmojiDictionary[]) => {
     const emojiMatches: object[] = [];
     textInput.map((word: string, wordIndex: number) => {
@@ -85,8 +82,23 @@ function Main() {
   };
 
   useEffect(() => {
-    findStrictEmojiMatches(words, emojiDictionary);
+    if (matchType === 'strict') {
+      findStrictEmojiMatches(words, emojiDictionary);
+    }
+
+    if (matchType === 'loose') {
+      findLooseEmojiMatches(words, emojiDictionary);
+    }
   }, [words]);
+
+  const swapMatchesWithEmojis = (words: string[], emojis: object[]) => {
+    // map through words
+    // if word matches emojis,
+    // remove item/rewrite item as codepoint
+    // convert codepoint to emoji
+    
+  };
+  // use
 
   console.log('userInput ->', userInput);
   console.log('words ->', words);
@@ -96,7 +108,7 @@ function Main() {
   return (
     <header className="App-header">
       <p>Translate text to 🙂</p>
-      <UserInput handleUserInput={handleUserInput} userInput={userInput} />
+      <UserInput handleUserInput={handleUserInput} userInput={userInput} matchType={matchType} />
     </header>
   );
 }
