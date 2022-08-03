@@ -1,6 +1,6 @@
 import React from 'react';
 
-function DisplayOutput({ output }) {
+function DisplayOutput({ output }: {output: string}) {
   return (
     <p>
       Text:
