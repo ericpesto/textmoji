@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import DisplayOutput from './DisplayOutput';
@@ -10,24 +14,20 @@ function Main() {
   const [emojis, setEmojis] = useState<object[]>([]);
   const [output, setOutput] = useState<string>('');
 
-  const matchType: string = 'strict';
+  const matchType = 'strict';
 
-  const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
   };
 
-  const splitPhraseIntoWords = () => {
+  useEffect(() => {
     const phraseToWords = userInput.split(' ');
     setWords(phraseToWords);
-  };
+  }, [userInput]);
 
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleTextInput(e);
+    handleText(e);
   };
-
-  useEffect(() => {
-    splitPhraseIntoWords();
-  }, [userInput]);
 
   // TODO
   // * or... easy mode, use plugins
@@ -75,17 +75,6 @@ function Main() {
     });
     setEmojis(emojiMatches);
   };
-
-  useEffect(() => {
-    if (matchType === 'strict') {
-      findStrictEmojiMatches(words, emojiDictionary);
-    }
-
-    if (matchType === 'loose') {
-      findLooseEmojiMatches(words, emojiDictionary);
-    }
-  }, [words, matchType]);
-
   interface EmojiMatch {
     word: string;
     wordIndex: number;
@@ -94,10 +83,11 @@ function Main() {
     emojiLibIndex: number;
   }
 
+  // ! ths function is causing the problem
   const swapMatchesWithEmojis = (inputWords: string[], matchedEmojis: object[]) => {
     const combined: string[] = [];
-    inputWords.map((word, wordIndex) => {
-      matchedEmojis.map((emoji: EmojiMatch) => {
+    inputWords.forEach((word, wordIndex) => {
+      matchedEmojis.forEach((emoji: EmojiMatch) => {
         if (emoji.wordIndex === wordIndex) {
           const { codePoint } = emoji;
           let santiziedCodePoint: string = '';
@@ -109,16 +99,29 @@ function Main() {
             santiziedCodePoint = codePoints[0].slice(2);
           }
           const emojiIcon = String.fromCodePoint(parseInt(santiziedCodePoint, 16));
-          return combined.push(emojiIcon);
+          combined.push(emojiIcon);
         }
-        return combined.push(word);
+        // combined.push(word);
       });
     });
-    setOutput(combined.join(' '));
+    // atm we are just returning matches if they are found, not word and emojis as was original intention
+    console.log('combined ->', combined);
+    return combined;
   };
 
   useEffect(() => {
-    swapMatchesWithEmojis(words, emojis);
+    if (matchType === 'strict') {
+      findStrictEmojiMatches(words, emojiDictionary);
+    }
+
+    if (matchType === 'loose') {
+      findLooseEmojiMatches(words, emojiDictionary);
+    }
+  }, [userInput]);
+
+  // the problem is that i was setting output inside a function that was being called.
+  useEffect(() => {
+    setOutput(swapMatchesWithEmojis(words, emojis));
   }, [words, emojis]);
 
   console.log('userInput ->', userInput);
