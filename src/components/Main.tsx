@@ -60,3 +60,5 @@ function Main() {
 }
 
 export default Main;
+// Lesson, simple data structures make a huge difference to the simplicity of FE code.
+// simple data = simple code
