@@ -19,6 +19,8 @@ function Main() {
   };
 
   useEffect(() => {
+    // * can i invert the inputs to make hte reverse possible?
+    // * or should it be its own function?
     // Define a function that takes a string as input
     function convertToEmoji(inputString: string) {
       // Create an object that maps words or phrases to emojis
