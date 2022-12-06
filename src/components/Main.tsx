@@ -1,9 +1,10 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import name from 'emoji-name-map';
 import DisplayOutput from './DisplayOutput';
 import UserInput from './UserInput';
-// NEW DICTORIARY
 
 function Main() {
   const [userInput, setUserInput] = useState<string>('');
@@ -27,7 +28,7 @@ function Main() {
       // Create a variable to store the converted string
       let convertedString = '';
       // Loop through each word in the input string
-      for (let i = 0; i < words.length; i++) {
+      for (let i = 0; i < words.length; i += 1) {
         // Get the current word
         const word = words[i];
         // Check if the word is a key in the emojiMap object
@@ -46,9 +47,6 @@ function Main() {
     }
     convertToEmoji(userInput);
   }, [userInput]);
-
-  console.log('userInput ->', userInput);
-  console.log('output ->', output);
 
   return (
     <header className="App-header">
