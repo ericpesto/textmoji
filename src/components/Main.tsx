@@ -1,9 +1,6 @@
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import '../App.css';
+import name from 'emoji-name-map';
 import DisplayOutput from './DisplayOutput';
 import UserInput from './UserInput';
 // NEW DICTORIARY
@@ -24,25 +21,15 @@ function Main() {
     // Define a function that takes a string as input
     function convertToEmoji(inputString: string) {
       // Create an object that maps words or phrases to emojis
-      const emojiMap = {
-        happy: '😊',
-        sad: '😢',
-        angry: '😠',
-        laughing: '😂',
-        love: '❤️',
-      };
-
+      const emojiMap = name.emoji;
       // Split the input string into individual words
       const words = inputString.split(' ');
-
       // Create a variable to store the converted string
       let convertedString = '';
-
       // Loop through each word in the input string
       for (let i = 0; i < words.length; i++) {
         // Get the current word
         const word = words[i];
-
         // Check if the word is a key in the emojiMap object
         if (emojiMap[word]) {
           // If it is, retrieve the corresponding emoji and add it to the converted string
