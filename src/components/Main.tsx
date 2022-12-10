@@ -24,7 +24,7 @@ function Main() {
     // Define a function that takes a string as input
     function convertToEmoji(inputString: string) {
       // Create an object that maps words or phrases to emojis
-      const emojiMap = name.emoji;
+      const emojiDictionary = name.emoji;
       // Split the input string into individual words
       const words = inputString.split(' ');
       // Create a variable to store the converted string
@@ -34,9 +34,9 @@ function Main() {
         // Get the current word
         const word = words[i];
         // Check if the word is a key in the emojiMap object
-        if (emojiMap[word]) {
+        if (emojiDictionary[word]) {
           // If it is, retrieve the corresponding emoji and add it to the converted string
-          convertedString += `${emojiMap[word]} `;
+          convertedString += `${emojiDictionary[word]} `;
         } else {
           // If not, just add the word itself to the converted string
           convertedString += `${word} `;
